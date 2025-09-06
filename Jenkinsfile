@@ -9,12 +9,14 @@ pipeline {
         stage('Setup Python') {
             steps {
                 sh 'python3 --version'
-                sh 'pip3 install -r requirements.txt'
+                sh 'python3 -m venv venv'
+                sh './venv/bin/pip install --upgrade pip'
+                sh './venv/bin/pip install -r requirements.txt'
             }
         }
         stage('Train Model') {
             steps {
-                sh 'python train_model.py'
+                sh './venv/bin/python train_model.py'
             }
         }
         stage('Test') {
