@@ -1,5 +1,12 @@
 import mlflow
-import mlflow.sklearn
+import mlflowith mlflow.start_run():
+    mlflow.log_param("n_estimators", 100)
+    mlflow.log_metric("accuracy", accuracy)
+    mlflow.sklearn.log_model(model, "iris_model")
+    
+    # Register the model
+    model_uri = f"runs:/{mlflow.active_run().info.run_id}/iris_model"
+    mlflow.register_model(model_uri, "iris_model")learn
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
