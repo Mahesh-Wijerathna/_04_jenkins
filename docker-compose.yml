@@ -13,6 +13,15 @@ services:
     command: sh -c "pip install mlflow && mlflow server --host 0.0.0.0 --port 5000"
     volumes:
       - mlflow_data:/mlflow
+  app:
+    image: python:3.11-slim
+    ports:
+      - "3000:3000"
+    volumes:
+      - "g:/7_SEM/ADVANCED AI/PROJECT/_04_jenkins:/workspace"
+    command: sh -c "cd /workspace && python3 -m venv venv && ./venv/bin/pip install -r requirements.txt && ./venv/bin/python app.py"
+    depends_on:
+      - mlflow
 
 volumes:
   jenkins_home:

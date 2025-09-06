@@ -28,6 +28,6 @@ mlflow.set_experiment("Iris Classification")
 with mlflow.start_run():
     mlflow.log_param("n_estimators", 100)
     mlflow.log_metric("accuracy", accuracy)
-    mlflow.sklearn.log_model(model, "model")
+    mlflow.sklearn.log_model(model, "iris_model")
 
 print(f"Model trained with accuracy: {accuracy}")
