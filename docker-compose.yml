@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   jenkins:
     image: jenkins/jenkins:lts
@@ -7,14 +5,15 @@ services:
       - "8080:8080"
     volumes:
       - jenkins_home:/var/jenkins_home
-  mlflow:
-    image: mlflow/mlflow:latest
-    ports:
-      - "5000:5000"
-    command: mlflow server --host 0.0.0.0 --port 5000
-    volumes:
-      - mlflow_data:/mlflow
+      - "g:/7_SEM/ADVANCED AI/PROJECT/_04_jenkins:/workspace"
+  # mlflow:
+  #   image: python:3.11-slim
+  #   ports:
+  #     - "5000:5000"
+  #   command: sh -c "pip install mlflow && mlflow server --host 0.0.0.0 --port 5000"
+  #   volumes:
+  #     - mlflow_data:/mlflow
 
 volumes:
   jenkins_home:
-  mlflow_data:
+#   mlflow_data:
