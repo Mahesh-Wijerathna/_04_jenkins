@@ -1,6 +1,6 @@
 services:
   jenkins:
-    build: .
+    build: ./jenkins
     ports:
       - "8080:8080"
     volumes:
@@ -9,6 +9,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - DOCKER_HOST=unix:///var/run/docker.sock
+    command: /usr/local/bin/start.sh
   mlflow:
     image: python:3.11-slim
     ports:
@@ -17,19 +18,19 @@ services:
     volumes:
       - mlflow_data:/mlflow
   trainer:
-    image: python:3.11-slim
+    build: ./model
     volumes:
       - ./:/workspace
-    command: sh -c "cd /workspace && python3 -m venv venv && ./venv/bin/pip install -r requirements.txt && ./venv/bin/python train_model.py"
+    command: sh -c "cd /workspace/model && ./venv/bin/python train_model.py"
     depends_on:
       - mlflow
   app:
-    image: python:3.11-slim
+    build: ./software
     ports:
       - "3000:3000"
     volumes:
       - ./:/workspace
-    command: sh -c "cd /workspace && python3 -m venv venv && ./venv/bin/pip install -r requirements.txt && ./venv/bin/python app.py"
+    command: sh -c "cd /workspace/software && ./venv/bin/python app.py"
     depends_on:
       - mlflow
 
