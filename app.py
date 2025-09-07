@@ -7,6 +7,16 @@ app = Flask(__name__)
 
 # Set MLflow tracking URI
 mlflow.set_tracking_uri("http://mlflow:5000")
+print(f"MLflow tracking URI set to: {mlflow.get_tracking_uri()}")
+
+# Debug: List all registered models
+try:
+    models = mlflow.search_registered_models()
+    print("Registered models:")
+    for model in models:
+        print(f"- Name: {model.name}, Latest Version: {model.latest_versions[0].version if model.latest_versions else 'None'}")
+except Exception as e:
+    print(f"Error listing models: {e}")
 
 # Load the model (assuming it's logged as "iris_model")
 try:
