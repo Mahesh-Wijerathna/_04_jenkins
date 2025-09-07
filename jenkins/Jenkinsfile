@@ -8,17 +8,17 @@ pipeline {
         }
         stage('Start MLflow') {
             steps {
-                sh 'docker-compose up -d mlflow'
+                sh 'cd /workspace && docker compose up -d mlflow'
             }
         }
         stage('Train Model') {
             steps {
-                sh 'docker-compose run --rm trainer'
+                sh 'cd /workspace && docker compose run --rm trainer'
             }
         }
         stage('Stop MLflow') {
             steps {
-                sh 'docker-compose down mlflow'
+                sh 'cd /workspace && docker compose down mlflow'
             }
         }
         stage('Test') {
