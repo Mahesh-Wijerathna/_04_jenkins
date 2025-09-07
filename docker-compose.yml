@@ -9,7 +9,15 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - DOCKER_HOST=unix:///var/run/docker.sock
-    command: /usr/local/bin/start.sh
+  ngrok:
+    image: ngrok/ngrok:latest
+    ports:
+      - "4040:4040"
+    environment:
+      - NGROK_AUTHTOKEN=32MPylzVFD1zt9hHflx2uD8iN4V_72ZmiBG8r7HqGVDfJA8KG
+    command: http jenkins:8080
+    depends_on:
+      - jenkins
   mlflow:
     image: python:3.11-slim
     ports:
